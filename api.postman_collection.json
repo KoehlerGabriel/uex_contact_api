@@ -1,0 +1,459 @@
+{
+	"info": {
+		"_postman_id": "c0d4ebba-33d7-43f1-8b98-2983b941532e",
+		"name": "uex_contacts_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26880408"
+	},
+	"item": [
+		{
+			"name": "Signup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user\": {\r\n    \"name\": \"Gabriel Koehler\",\r\n    \"email\": \"gok@mail.com\",\r\n    \"password\": \"123456\",\r\n    \"password_confirmation\": \"123456\"\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var token = pm.response.headers.get(\"authorization\");\r",
+							"\r",
+							"if (token) {\r",
+							"    token = token.split(\" \")[1];\r",
+							"\r",
+							"    pm.environment.set(\"token\", token);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followAuthorizationHeader": false
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user\": {\r\n    \"email\": \"admin@mail.com\",\r\n    \"password\": \"123456\"\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzNWM1MzRiOC04NDgzLTQxYzUtYTE4MS03OGY2MjdjODAwZjEiLCJzdWIiOiIxIiwic2NwIjoidXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNzM4MTA2MjEzLCJleHAiOjE3MzgxMDgwMTN9.kW1Ahubys4IQmyRyQa3h8ueQlI3KrIu7x5owuiZEOaQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user\": {\r\n    \"email\": \"gok@mail.com\",\r\n    \"password\": \"123456\"\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/logout",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contact",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"contact\": {\r\n        \"name\": \"Rafael Santos\",\r\n        \"cpf\": \"880.409.638-18\",\r\n        \"phone\": \"(35) 95678-9012\",\r\n        \"address\": \"Rua Monte Alegre, 350\",\r\n        \"address_complement\": \"\",\r\n        \"cep\": \"30710-500\",\r\n        \"city\": \"Poços de Caldas\",\r\n        \"uf\": \"MG\"\r\n    }\r\n}\r\n\r\n// {\r\n//     \"contact\": {\r\n//         \"name\": \"Fernanda Oliveira\",\r\n//         \"cpf\": \"923.158.390-50\",\r\n//         \"phone\": \"(35) 94567-8901\",\r\n//         \"address\": \"Rua Independência, 232\",\r\n//         \"address_complement\": \"Bloco A, 2º andar\",\r\n//         \"cep\": \"38015-100\"\r\n//     }\r\n// }\r\n\r\n// {\r\n//     \"contact\": {\r\n//         \"name\": \"Carlos Silva\",\r\n//         \"cpf\": \"506.293.670-51\",\r\n//         \"phone\": \"(35) 93456-7890\",\r\n//         \"address\": \"Rua das Flores, 870\",\r\n//         \"address_complement\": \"\",\r\n//         \"cep\": \"30160-080\"\r\n//     }\r\n// }\r\n\r\n\r\n// {\r\n//     \"contact\": {\r\n//         \"name\": \"Juliana Alves\",\r\n//         \"cpf\": \"786.486.460-06\",\r\n//         \"phone\": \"(35) 92345-6789\",\r\n//         \"address\": \"Rua São João, 550\",\r\n//         \"address_complement\": \"Casa 2\",\r\n//         \"cep\": \"30535-300\"\r\n//     }\r\n// }\r\n\r\n// {\r\n//     \"contact\": {\r\n//         \"name\": \"Lucas Pereira\",\r\n//         \"cpf\": \"081.106.180-90\",\r\n//         \"phone\": \"(35) 91234-5678\",\r\n//         \"address\": \"Avenida Brasil, 1200\",\r\n//         \"address_complement\": \"Apto 402\",\r\n//         \"cep\": \"30110-100\"\r\n//     }\r\n// }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/contacts",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contact",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"contact\": {\r\n    \"name\": \"Ana Elisa Martins\"\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/contacts/12",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"contacts",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contact",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/contacts/12",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"contacts",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contacts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/contacts?page=1&order=asc&per_page=10",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"contacts"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						},
+						{
+							"key": "search",
+							"value": "a",
+							"disabled": true
+						},
+						{
+							"key": "per_page",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/user",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/user",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Addresses/Search",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/addresses/search?uf=MG&city=Poços de Caldas&street=sab",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"addresses",
+						"search"
+					],
+					"query": [
+						{
+							"key": "uf",
+							"value": "MG"
+						},
+						{
+							"key": "city",
+							"value": "Poços de Caldas"
+						},
+						{
+							"key": "street",
+							"value": "sab"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

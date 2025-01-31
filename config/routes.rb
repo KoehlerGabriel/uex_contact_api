@@ -3,9 +3,12 @@ Rails.application.routes.draw do
     sign_in: 'login',
     sign_out: 'logout',
     registration: 'signup'
-  },
-  controllers: {
+  }, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
+
+  resources :contacts, only: [:index, :show, :create, :destroy, :update]
+  resource :user, only: [:show, :update, :destroy]
+  get 'addresses/search', to: 'addresses#search'
 end
